@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_back_ground"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/contract_introduction_serialnumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="合同编号:wedajd12234223"
+        android:textColor="@color/lightBlue"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/contract_introduction_suppliername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:text="供应商名称:振邦集团"
+        android:textColor="@color/shallowGray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/contract_introduction_reviewofpeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:text="送审人:李晓波"
+        android:textColor="@color/shallowGray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/contract_introduction_review_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:text="送审时间:2015-05-06 9:34"
+        android:textColor="@color/lightGray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/contract_introduction_review_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:text="送审状态:初次送审"
+        android:textColor="@color/shallowGray"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/contract_introduction_audit_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:text="审核状态:通过"
+        android:textColor="@color/lightRed"
+        android:textSize="16sp" />
+
+</LinearLayout>

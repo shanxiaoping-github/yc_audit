@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseColor"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title_bar"
+        android:text="登录" />
+
+    <EditText
+        android:id="@+id/login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:background="@color/white"
+        android:hint="用户名"
+        android:maxLength="20"
+        android:padding="15dip"
+        android:singleLine="true"
+        android:textColor="@color/shallowGray"
+        android:textColorHint="@color/hintColor" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/diver" />
+
+    <EditText
+        android:id="@+id/login_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:background="@color/white"
+        android:hint="密码"
+        android:maxLength="8"
+        android:padding="15dip"
+        android:password="true"
+        android:singleLine="true"
+        android:textColor="@color/shallowGray"
+        android:textColorHint="@color/hintColor" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/diver" />
+
+    <Button
+        android:id="@+id/login_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/orange_back_ground"
+        android:padding="15dip"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

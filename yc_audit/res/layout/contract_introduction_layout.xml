@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/baseColor"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title_bar"
+        android:text="合同审核" />
+
+    <ListView
+        android:id="@+id/contract_introduction_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/diver"
+        android:dividerHeight="1dip" >
+    </ListView>
+
+</LinearLayout>

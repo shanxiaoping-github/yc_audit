@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="条款:"
+        android:textColor="@color/lightBlue" />
+
+    <TextView
+        android:id="@+id/contract_term_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="dajldjaldj啊来得及啊老大哈算了打了多久啊老大哈打来得及打了就打来得及啊多久啊大家安静的拉金德拉多久啊多久啊垃圾打多久啊大姐"
+        android:textColor="@color/shallowGray" />
+
+</LinearLayout>

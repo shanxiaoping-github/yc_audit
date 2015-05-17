@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/contract_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合同编号:www"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dip"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/contract_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公司:友邦 "
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/contract_pay_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收付款协议:7天收款"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dip"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/contract_signed_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="签订日期:2015-05-05"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/contract_send_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发货日期:2015-04-03"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dip"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/contract_come_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="到货日期:2015-04-04"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/contract_open_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开票名称 :www"
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dip"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/contract_provide_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="供应商名称:友邦 "
+            android:textColor="@color/select_orange"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>
