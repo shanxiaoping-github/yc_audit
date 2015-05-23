@@ -51,9 +51,9 @@ public class ContractIntroductionAdapter extends
 		
 		holder.reviewTime.setText("送审时间:"+contract.getReviewTime());
 		
-		holder.reviewStatus.setText("送审状态:"+contract.getReviewStatus());
+		holder.reviewStatus.setText("送审状态:"+(contract.getReviewStatus().equals("1")?"初次送审":contract.getReviewStatus()+"次送审"));
 		
-		holder.auditStatus.setText("审核状态:"+contract.getAuditStatus());
+		holder.auditStatus.setText("审核状态:"+(contract.getAuditStatus().equals("1")?"通过":contract.getAuditStatus().equals("2")?"不通过":"未审核 "));
 
 		arg1.setOnClickListener(new OnClickListener() {
 			

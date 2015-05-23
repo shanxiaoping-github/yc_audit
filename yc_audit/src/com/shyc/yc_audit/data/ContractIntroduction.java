@@ -1,8 +1,13 @@
 package com.shyc.yc_audit.data;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import sxp.android.framework.data.BaseData;
+import sxp.android.framework.util.JsonUtil;
 
 /**
  * 合同简略数据
@@ -37,15 +42,43 @@ public class ContractIntroduction implements BaseData {
 	 * 审核状态
 	 */
 	private String auditStatus;
+	
+	
+	
+	
 
 	public void parser(JSONObject jo) {
 		// TODO Auto-generated method stub
-
+		serialNumber = JsonUtil.getJsonString(jo,"contractId");
+		reviewTime = JsonUtil.getJsonString(jo,"createdate");
+		
+	
+		
+		reviewOfPeople = JsonUtil.getJsonString(jo,"operater");
+		supplierName = JsonUtil.getJsonString(jo,"supplierName");
+		reviewStatus = JsonUtil.getJsonString(jo,"counts");
+		auditStatus = JsonUtil.getJsonString(jo,"status");
 	}
 
 	public JSONObject page() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public static ArrayList<ContractIntroduction> getList(String jsonStr){
+		ArrayList<ContractIntroduction> list = new ArrayList<ContractIntroduction>();
+		try {
+			JSONArray ja = new JSONArray(jsonStr);
+			for(int i=0;i<ja.length();i++){
+			 JSONObject jo = 	ja.getJSONObject(i);
+			 ContractIntroduction contract =  new ContractIntroduction();
+			 contract.parser(jo);
+			 list.add(contract);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public String getSerialNumber() {
@@ -72,13 +105,9 @@ public class ContractIntroduction implements BaseData {
 		this.reviewOfPeople = reviewOfPeople;
 	}
 
-	public String getReviewTime() {
-		return reviewTime;
-	}
 
-	public void setReviewTime(String reviewTime) {
-		this.reviewTime = reviewTime;
-	}
+
+
 
 	public String getReviewStatus() {
 		return reviewStatus;
@@ -94,6 +123,14 @@ public class ContractIntroduction implements BaseData {
 
 	public void setAuditStatus(String auditStatus) {
 		this.auditStatus = auditStatus;
+	}
+
+	public String getReviewTime() {
+		return reviewTime;
+	}
+
+	public void setReviewTime(String reviewTime) {
+		this.reviewTime = reviewTime;
 	}
 
 }

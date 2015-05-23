@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginActivity"
+            android:name="com.shyc.yc_audit.ui.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,19 +24,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ContractIntroductionActivity"
+            android:name="com.shyc.yc_audit.ui.ContractIntroductionActivity"
             android:screenOrientation="portrait" >
         </activity>
         
          <activity
-            android:name=".ContractDetailActivity"
+            android:name="com.shyc.yc_audit.ui.ContractDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
         
         
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" >
-    </uses-permission>
+   <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.shyc.yc_audit;
+package com.shyc.yc_audit.ui;
 
 import sxp.android.framework.http.BaseAsynHttpClient;
 import sxp.android.framework.http.BaseAsynHttpClient.AsynHcResponseListener;
@@ -9,6 +9,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.shyc.yc_audit.R;
+import com.shyc.yc_audit.R.id;
+import com.shyc.yc_audit.R.layout;
 import com.shyc.yc_audit.http.HttpAdress;
 import com.shyc.yc_audit.http.HttpLoginClient;
 import com.shyc.yc_audit.util.ShowUtil;
@@ -59,29 +62,42 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			sxp.android.framework.util.ShowUtil.showShortToast(this, "密码不能为空");
 
 		} else {
-			openActivity(ContractIntroductionActivity.class);
-//			HttpLoginClient client = new HttpLoginClient();
-//			client.cleanResponse();
-//			client.addAsynHcResponseListenrt(new AsynHcResponseListener() {
-//
-//				public boolean onTimeout() {
-//					// TODO Auto-generated method stub
-//					return false;
-//				}
-//
-//				public boolean onSuccess(BaseAsynHttpClient asynHttpClient) {
-//					// TODO Auto-generated method stub
-//					return false;
-//				}
-//
-//				public boolean onEmpty() {
-//					// TODO Auto-generated method stub
-//					return false;
-//				}
-//			});
-//			client.setPramas(new Object[] { userNameStr, pwdStr });
-//			ShowUtil.openHttpDialog("登录中...");
-//			client.subRequestGet(HttpAdress.LOGIN);
+		
+			HttpLoginClient client = new HttpLoginClient();
+			client.cleanResponse();
+			client.addAsynHcResponseListenrt(new AsynHcResponseListener() {
+
+				public boolean onTimeout() {
+					// TODO Auto-generated method stub
+					ShowUtil.closeHttpDialog();
+					showShortToast("登录超时");
+					return false;
+				}
+
+				public boolean onSuccess(BaseAsynHttpClient asynHttpClient) {
+					// TODO Auto-generated method stub
+					ShowUtil.closeHttpDialog();
+					HttpLoginClient client = (HttpLoginClient)asynHttpClient;
+					if(client.getStatus().equals("0")){
+						
+						showShortToast("登录成功");
+						openActivity(ContractIntroductionActivity.class);
+					}else{
+						showShortToast("登录失败");
+					}
+					return false;
+				}
+
+				public boolean onEmpty() {
+					// TODO Auto-generated method stub
+					ShowUtil.closeHttpDialog();
+					showShortToast("登录失败");
+					return false;
+				}
+			});
+			client.setPramas(new Object[]{HttpAdress.LOGIN_ACTION,userNameStr,pwdStr});
+			ShowUtil.openHttpDialog("登录中...");
+			client.subRequestGet(HttpAdress.LOGIN_URL);
 
 		}
 	}
