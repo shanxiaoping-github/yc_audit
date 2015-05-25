@@ -53,6 +53,12 @@ public class ContractIntroductionActivity extends BaseActivity {
 			}
 		});
 		contractlistview.setAdapter(contractAdapter);
+		//getList();
+	}
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
 		getList();
 	}
 

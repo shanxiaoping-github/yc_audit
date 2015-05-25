@@ -1,6 +1,10 @@
 package com.shyc.yc_audit.http;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import sxp.android.framework.http.BaseAsynHttpClient;
+import sxp.android.framework.util.JsonUtil;
 /**
  * 提交审核结果
  * @author xiaoping.shan
@@ -29,10 +33,27 @@ public class HttpContractSubmitResultClient extends BaseAsynHttpClient{
 	    };
 	}
 
+	
+	private String flag;
 	@Override
 	protected void parerAsynHcResponse(String content) {
 		// TODO Auto-generated method stub
-		System.out.print("sss");
+		
+		try {
+			JSONObject jo  = new JSONObject(content);
+			flag = JsonUtil.getJsonString(jo,"flag");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.print("sss");
 	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	
 
 }

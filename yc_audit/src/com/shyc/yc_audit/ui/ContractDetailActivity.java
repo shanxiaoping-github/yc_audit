@@ -47,7 +47,7 @@ public class ContractDetailActivity extends BaseActivity implements
 
 	private TextView contracTermContent;
 
-	private ListView productList;
+	private ListView productListView;
 
 	private TextView yesTxt;
 	private TextView noTxt;
@@ -86,9 +86,10 @@ public class ContractDetailActivity extends BaseActivity implements
 		/**
 		 * 操作
 		 */
-		productList = (ListView) findViewById(R.id.contract_detail_product_listview);
+		productListView = (ListView) findViewById(R.id.contract_detail_product_listview);
 		productAdapter = new ProductAdapter();
 		productAdapter.setContext(this);
+		productListView.setAdapter(productAdapter);
 		
 		
 		
@@ -196,6 +197,13 @@ public class ContractDetailActivity extends BaseActivity implements
 			public boolean onSuccess(BaseAsynHttpClient asynHttpClient) {
 				// TODO Auto-generated method stub
 				ShowUtil.closeHttpDialog();
+				HttpContractSubmitResultClient client = (HttpContractSubmitResultClient)asynHttpClient;
+				if(client.getFlag().equals("1")){
+					showShortToast("审核成功");
+					finishBase();
+				}else{
+					showShortToast("审核失败");
+				}
 				return false;
 			}
 
