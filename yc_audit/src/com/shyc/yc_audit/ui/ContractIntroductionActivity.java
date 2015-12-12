@@ -104,8 +104,6 @@ public class ContractIntroductionActivity extends BaseActivity {
 		client.setPramas(new Object[]{
 				HttpAdress.CONTRACT_LIST_ACTION,
 				userinfo.getUserName(),
-				"1"
-				
 		});
 		ShowUtil.openHttpDialog("加载中...");
 		client.subRequestPost(HttpAdress.CONTRACT_LIST_URL);

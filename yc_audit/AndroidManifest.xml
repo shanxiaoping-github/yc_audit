@@ -8,6 +8,8 @@
         android:minSdkVersion="17"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="sxp.android.framework.application.SXPApplication"
         android:allowBackup="true"
@@ -27,15 +29,10 @@
             android:name="com.shyc.yc_audit.ui.ContractIntroductionActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.shyc.yc_audit.ui.ContractDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-        
     </application>
-
-   <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

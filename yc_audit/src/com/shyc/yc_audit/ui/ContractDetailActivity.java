@@ -166,7 +166,7 @@ public class ContractDetailActivity extends BaseActivity implements
 				contract.getSerialNumber(), "1"
 
 		});
-		client.subRequestGet(HttpAdress.CONTRACT_RESULT_INFO_URL);
+		client.subRequestPost(HttpAdress.CONTRACT_RESULT_INFO_URL);
 
 	}
 
@@ -198,9 +198,13 @@ public class ContractDetailActivity extends BaseActivity implements
 				// TODO Auto-generated method stub
 				ShowUtil.closeHttpDialog();
 				HttpContractSubmitResultClient client = (HttpContractSubmitResultClient)asynHttpClient;
-				if(client.getFlag().equals("1")){
-					showShortToast("审核成功");
+				if(client.getFlag().equals("0")){
+					showShortToast("审核成功,进入下一级审核");
 					finishBase();
+				}else if(client.getFlag().equals("-1")){
+					showShortToast("审核结束,合同审核状态保存失败");
+				}else if(client.getFlag().equals("1")){
+					showShortToast("审核结束,合同审核状态保存成功");
 				}else{
 					showShortToast("审核失败");
 				}
@@ -215,23 +219,19 @@ public class ContractDetailActivity extends BaseActivity implements
 				return false;
 			}
 		});
-		//
-		// "contractId",
-		// "lv",
-		// "userName",
-		// "status",
-		// "opinion"
+	
 		String opinionStr  = auditOpinion.getText().toString();
 		UserInfo userInfo = (UserInfo) SXPApplication.getInstance()
 				.getSXPRuntimeContext().getData(UserInfo.class.getName());
+
 		client.setPramas(new Object[] { HttpAdress.CONTRACT_AUDIT_ACTION,
-				contract.getSerialNumber(), "1", userInfo.getUserName(),
+				contract.getSerialNumber(),userInfo.getUserName(),
 				yesBox.isChecked() ? "1" : "2",
-				StringUtil.isEmpty(opinionStr)?"":opinionStr
+				StringUtil.isEmpty(opinionStr)?"":opinionStr,contract.getProcessId(),contract.getProcessNode()
 
 		});
 		ShowUtil.openHttpDialog("审核提交中...");
-		client.subRequestGet(HttpAdress.CONTRACT_AUDIT_URL);
+		client.subRequestPost(HttpAdress.CONTRACT_AUDIT_URL);
 
 	}
 

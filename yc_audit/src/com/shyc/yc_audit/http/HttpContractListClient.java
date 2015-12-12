@@ -9,8 +9,10 @@ import org.json.JSONObject;
 
 import com.shyc.yc_audit.data.ContractIntroduction;
 
+import sxp.android.framework.data.JsonDataFactory;
 import sxp.android.framework.http.BaseAsynHttpClient;
 import sxp.android.framework.util.JsonUtil;
+import sxp.android.framework.util.StringUtil;
 
 /**
  * 合同列表
@@ -26,40 +28,35 @@ public class HttpContractListClient extends BaseAsynHttpClient {
 		return new String[]{
 				HttpAdress.ACTION,
 				"userName",
-				"lv"
 		};
 	}
 	
-
-	private String level;
-	private ArrayList<ContractIntroduction> list;
+    private ArrayList<ContractIntroduction> list = new ArrayList<ContractIntroduction>();
+ 
 	@Override
 	protected void parerAsynHcResponse(String content) {
 		// TODO Auto-generated method stub
 
 		try {
 			JSONObject jo = new JSONObject(content);
-			level = JsonUtil.getJsonString(jo,"level");
-			String contractStr = JsonUtil.getJsonString(jo,"contract");
-			list = ContractIntroduction.getList(contractStr);
-			
+			String contractJsonStr = JsonUtil.getJsonString(jo,"contract");
+			if(StringUtil.isNotJsonEmpty(contractJsonStr)){
+				list = JsonDataFactory.getJsonDataArray(contractJsonStr,ContractIntroduction.class);
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
-	}
+
 	public ArrayList<ContractIntroduction> getList() {
 		return list;
 	}
+
 	public void setList(ArrayList<ContractIntroduction> list) {
 		this.list = list;
 	}
+	
 
 }

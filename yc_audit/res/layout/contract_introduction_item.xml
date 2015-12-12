@@ -33,6 +33,7 @@
         android:textSize="16sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/contract_introduction_review_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
         android:textSize="16sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/contract_introduction_review_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

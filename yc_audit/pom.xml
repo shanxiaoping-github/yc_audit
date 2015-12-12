@@ -4,14 +4,11 @@
 	<groupId>yc_audit</groupId>
 	<artifactId>yc_audit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-
 	<dependencies>
 		<dependency>
 			<groupId>framework</groupId>
 			<artifactId>sxp-android-framework</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
 </project>

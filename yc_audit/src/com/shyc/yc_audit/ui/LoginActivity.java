@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			});
 			client.setPramas(new Object[]{HttpAdress.LOGIN_ACTION,userNameStr,pwdStr});
 			ShowUtil.openHttpDialog("登录中...");
-			client.subRequestGet(HttpAdress.LOGIN_URL);
+			client.subRequestPost(HttpAdress.LOGIN_URL);
 
 		}
 	}

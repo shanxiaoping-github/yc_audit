@@ -31,48 +31,43 @@ public class ContractIntroduction implements BaseData {
 	 */
 	private String reviewOfPeople;
 	/**
-	 * 送审时间
-	 */
-	private String reviewTime;
-	/**
-	 * 初审状态
-	 */
-	private String reviewStatus;
-	/**
 	 * 审核状态
 	 */
 	private String auditStatus;
-	
-	
-	
-	
+	/**
+	 * 审核编号
+	 */
+	private String processId;
+	/**
+	 * 审核节点
+	 */
+	private String processNode;
 
 	public void parser(JSONObject jo) {
 		// TODO Auto-generated method stub
-		serialNumber = JsonUtil.getJsonString(jo,"contractId");
-		reviewTime = JsonUtil.getJsonString(jo,"createdate");
-		
-	
-		
-		reviewOfPeople = JsonUtil.getJsonString(jo,"operater");
-		supplierName = JsonUtil.getJsonString(jo,"supplierName");
-		reviewStatus = JsonUtil.getJsonString(jo,"counts");
-		auditStatus = JsonUtil.getJsonString(jo,"status");
+		serialNumber = JsonUtil.getJsonString(jo, "contractId");
+		reviewOfPeople = JsonUtil.getJsonString(jo, "operater");
+		supplierName = JsonUtil.getJsonString(jo, "supplierName");
+		auditStatus = JsonUtil.getJsonString(jo, "status");
+		processId = JsonUtil.getJsonString(jo, "processId");
+		processNode = JsonUtil.getJsonString(jo, "processNode");
+
 	}
 
 	public JSONObject page() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public static ArrayList<ContractIntroduction> getList(String jsonStr){
+
+	public static ArrayList<ContractIntroduction> getList(String jsonStr) {
 		ArrayList<ContractIntroduction> list = new ArrayList<ContractIntroduction>();
 		try {
 			JSONArray ja = new JSONArray(jsonStr);
-			for(int i=0;i<ja.length();i++){
-			 JSONObject jo = 	ja.getJSONObject(i);
-			 ContractIntroduction contract =  new ContractIntroduction();
-			 contract.parser(jo);
-			 list.add(contract);
+			for (int i = 0; i < ja.length(); i++) {
+				JSONObject jo = ja.getJSONObject(i);
+				ContractIntroduction contract = new ContractIntroduction();
+				contract.parser(jo);
+				list.add(contract);
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -105,18 +100,6 @@ public class ContractIntroduction implements BaseData {
 		this.reviewOfPeople = reviewOfPeople;
 	}
 
-
-
-
-
-	public String getReviewStatus() {
-		return reviewStatus;
-	}
-
-	public void setReviewStatus(String reviewStatus) {
-		this.reviewStatus = reviewStatus;
-	}
-
 	public String getAuditStatus() {
 		return auditStatus;
 	}
@@ -125,12 +108,20 @@ public class ContractIntroduction implements BaseData {
 		this.auditStatus = auditStatus;
 	}
 
-	public String getReviewTime() {
-		return reviewTime;
+	public String getProcessId() {
+		return processId;
 	}
 
-	public void setReviewTime(String reviewTime) {
-		this.reviewTime = reviewTime;
+	public void setProcessId(String processId) {
+		this.processId = processId;
+	}
+
+	public String getProcessNode() {
+		return processNode;
+	}
+
+	public void setProcessNode(String processNode) {
+		this.processNode = processNode;
 	}
 
 }

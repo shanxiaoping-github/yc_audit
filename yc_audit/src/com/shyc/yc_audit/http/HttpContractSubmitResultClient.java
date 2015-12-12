@@ -26,10 +26,11 @@ public class HttpContractSubmitResultClient extends BaseAsynHttpClient{
 		return new String[]{
 				HttpAdress.ACTION,
 				"contractId",
-				"lv",
 				"userName",
 				"status",
-				"opinion"
+				"opinion",
+				"processId",
+				"processNode"
 	    };
 	}
 
