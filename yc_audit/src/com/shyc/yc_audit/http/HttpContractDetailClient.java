@@ -21,12 +21,11 @@ public class HttpContractDetailClient extends BaseAsynHttpClient{
 		return new String[]{
 				HttpAdress.ACTION,
 				"contractId",
-				"lv"
-				
-				
+				"processId",
+				"processNode"
 		};
 	}
-
+	
 	private ContractDetail contractDetail;
 	@Override
 	protected void parerAsynHcResponse(String content) {

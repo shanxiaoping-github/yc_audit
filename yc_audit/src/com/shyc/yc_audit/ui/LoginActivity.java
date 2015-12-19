@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.shyc.yc_audit.R;
-import com.shyc.yc_audit.R.id;
-import com.shyc.yc_audit.R.layout;
 import com.shyc.yc_audit.http.HttpAdress;
 import com.shyc.yc_audit.http.HttpLoginClient;
 import com.shyc.yc_audit.util.ShowUtil;

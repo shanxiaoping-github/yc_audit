@@ -7,17 +7,17 @@ package com.shyc.yc_audit.http;
  *
  */
 public class HttpAdress {
-	 public static final String ACTION="action";
-	/**
-	 * 登录
-	 */
+	public static final String ACTION="action";
 	
 	public static final String LOGIN_URL = "loginTest.action";
 	public static final String LOGIN_ACTION = "loginTest";
 	
-	
 	public static final String CONTRACT_LIST_URL ="getPartContractList.action";
 	public static final String CONTRACT_LIST_ACTION = "getPartContractList";
+	
+	public static final String CONTRACT_ALREADY_LIST_URL = "getCompleteContractList.action";
+	public static final String CONTRACT_ALREADY_LIST_ACTION = "getCompleteContractList";
+	
 	
 	public static final String CONTRACT_RESULT_INFO_URL = "getContractResultInfo.action";
 	public static final String CONTRACT_RESULT_INFO_ACTION = "getContractResultInfo";

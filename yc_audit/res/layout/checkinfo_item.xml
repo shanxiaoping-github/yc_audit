@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="5dip"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="5dip" >
+
+    <TextView
+        android:id="@+id/check_info_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="审核人姓名：单小平"
+        android:textColor="@color/shallowGray" />
+
+    <TextView
+        android:id="@+id/check_info_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="审核人身份：经理"
+        android:textColor="@color/lightBlue" />
+
+    <TextView
+        android:id="@+id/check_info_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:text="我同意此项合同，但某些地方还需待商榷"
+        android:textColor="@color/shallowGray" />
+
+</LinearLayout>

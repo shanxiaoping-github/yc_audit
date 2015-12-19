@@ -6,55 +6,66 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sxp.android.framework.data.BaseData;
+import sxp.android.framework.data.JsonDataFactory;
 import sxp.android.framework.util.JsonUtil;
+import sxp.android.framework.util.StringUtil;
+
 /**
  * 合同详情
+ * 
  * @author xiaoping.shan
  *
  */
-public class ContractDetail implements BaseData{
-	
+public class ContractDetail implements BaseData {
+
 	private static final long serialVersionUID = 1L;
 	private ContractInfo contractInfo;
-	private ArrayList<ContractProducts> productList;
+	private ArrayList<ContractProducts> productList = new ArrayList<ContractProducts>();
 	private String termName;
 	private String orgName;
 	private String crateContractOrg;
-	
-	
-	
+	private ArrayList<CheckInfo> checkInfos = new ArrayList<CheckInfo>();
 
-	public void parser(JSONObject jo){
+	public void parser(JSONObject jo) {
 		// TODO Auto-generated method stub
-		
-		String contractInfoStr = JsonUtil.getJsonString(jo,"contractInfo");
-		contractInfoStr = contractInfoStr.substring(1,contractInfoStr.length()-1);
-		contractInfo = new ContractInfo();
-		try {
-			contractInfo.parser(new JSONObject(contractInfoStr));
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		String contractInfoStr = JsonUtil.getJsonString(jo, "contractInfo");
+		if (StringUtil.isNotJsonEmpty(contractInfoStr)) {
+			contractInfoStr = contractInfoStr.substring(1,
+					contractInfoStr.length() - 1);
+			contractInfo = new ContractInfo();
+			try {
+				contractInfo.parser(new JSONObject(contractInfoStr));
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
-		String contractProductStr = JsonUtil.getJsonString(jo,"contractProducts"); 
-		productList = ContractProducts.getList(contractProductStr);
-		
-		
-		String bdPaytermStr = JsonUtil.getJsonString(jo,"bdPayterm");
-		try {
-			JSONObject bdJson = new JSONObject(bdPaytermStr);
-			termName = JsonUtil.getJsonString(bdJson,"termname");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String contractProductStr = JsonUtil.getJsonString(jo,
+				"contractProducts");
+		if (StringUtil.isNotJsonEmpty(contractProductStr)) {
+			productList = ContractProducts.getList(contractProductStr);
 		}
-		
-		
-		orgName = JsonUtil.getJsonString(jo,"orgName");
-		crateContractOrg = JsonUtil.getJsonString(jo,"crateContractOrg");
-		
-	
+
+		String bdPaytermStr = JsonUtil.getJsonString(jo, "bdPayterm");
+		if (StringUtil.isNotJsonEmpty(bdPaytermStr)) {
+			try {
+				JSONObject bdJson = new JSONObject(bdPaytermStr);
+				termName = JsonUtil.getJsonString(bdJson, "termname");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		orgName = JsonUtil.getJsonString(jo, "orgName");
+		crateContractOrg = JsonUtil.getJsonString(jo, "crateContractOrg");
+
+		String checkInfoStr = JsonUtil.getJsonString(jo, "hasCheck");
+		if (StringUtil.isNotJsonEmpty(checkInfoStr)) {
+			this.checkInfos = JsonDataFactory.getJsonDataArray(checkInfoStr, CheckInfo.class);
+		}
+
 	}
 
 	public JSONObject page() {
@@ -100,6 +111,14 @@ public class ContractDetail implements BaseData{
 
 	public void setCrateContractOrg(String crateContractOrg) {
 		this.crateContractOrg = crateContractOrg;
+	}
+
+	public ArrayList<CheckInfo> getCheckInfos() {
+		return checkInfos;
+	}
+
+	public void setCheckInfos(ArrayList<CheckInfo> checkInfos) {
+		this.checkInfos = checkInfos;
 	}
 
 }
