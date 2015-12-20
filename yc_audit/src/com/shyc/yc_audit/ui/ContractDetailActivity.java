@@ -1,5 +1,8 @@
 package com.shyc.yc_audit.ui;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import sxp.android.framework.application.SXPApplication;
 import sxp.android.framework.http.BaseAsynHttpClient;
 import sxp.android.framework.http.BaseAsynHttpClient.AsynHcResponseListener;
@@ -229,17 +232,24 @@ public class ContractDetailActivity extends BaseActivity implements
 		UserInfo userInfo = (UserInfo) SXPApplication.getInstance()
 				.getSXPRuntimeContext().getData(UserInfo.class.getName());
 
-		client.setPramas(new Object[] { HttpAdress.CONTRACT_AUDIT_ACTION,
-				contract.getSerialNumber(),userInfo.getUserName(),
-				yesBox.isChecked() ? "1" : "2",
-				StringUtil.isEmpty(opinionStr)?"":opinionStr,contract.getProcessId(),contract.getProcessNode()
+		try {
+			client.setPramas(new Object[] { HttpAdress.CONTRACT_AUDIT_ACTION,
+					contract.getSerialNumber(),userInfo.getUserName(),
+					yesBox.isChecked() ? "1" : "2",
+					StringUtil.isEmpty(opinionStr)?"":new String(opinionStr.getBytes("utf-8"), "gb2312"),contract.getProcessId(),contract.getProcessNode()
 
-		});
+			});
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
 		ShowUtil.openHttpDialog("审核提交中...");
 		client.subRequestPost(HttpAdress.CONTRACT_AUDIT_URL);
 
 	}
-
+ 
+	
 	/**
 	 * 设置详情
 	 */

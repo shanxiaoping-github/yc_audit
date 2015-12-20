@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="125" id="KGk-i7-Jjw" customClass="ContractIntroduceCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="合同编号：123456" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUI-JQ-v88">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.48745764359999999" green="0.75386332280000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="供应商名称：全聚德" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HVw-co-urr">
+                        <rect key="frame" x="0.0" y="31" width="320" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="送审人：单小平" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMv-3b-4yh">
+                        <rect key="frame" x="0.0" y="62" width="320" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="审核状态：通过" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sbY-aS-SoQ">
+                        <rect key="frame" x="0.0" y="93" width="320" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="1" green="0.68622387430278675" blue="0.41129764598576191" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="IUI-JQ-v88" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="1kg-cz-WTh"/>
+                    <constraint firstAttribute="bottom" secondItem="sbY-aS-SoQ" secondAttribute="bottom" constant="10" id="2U6-30-qB5"/>
+                    <constraint firstItem="HVw-co-urr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="3LF-tR-UkK"/>
+                    <constraint firstAttribute="trailing" secondItem="JMv-3b-4yh" secondAttribute="trailing" id="6Cr-60-5DI"/>
+                    <constraint firstAttribute="trailing" secondItem="HVw-co-urr" secondAttribute="trailing" id="BTe-5v-oOa"/>
+                    <constraint firstAttribute="trailing" secondItem="sbY-aS-SoQ" secondAttribute="trailing" id="D47-mT-dbK"/>
+                    <constraint firstItem="sbY-aS-SoQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Gst-V9-7n9"/>
+                    <constraint firstItem="IUI-JQ-v88" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Y9X-uC-uSl"/>
+                    <constraint firstItem="JMv-3b-4yh" firstAttribute="top" secondItem="HVw-co-urr" secondAttribute="bottom" constant="3" id="Yye-QQ-yu0"/>
+                    <constraint firstItem="JMv-3b-4yh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bmb-CA-HMA"/>
+                    <constraint firstItem="HVw-co-urr" firstAttribute="top" secondItem="IUI-JQ-v88" secondAttribute="bottom" constant="3" id="cON-ss-aCA"/>
+                    <constraint firstAttribute="trailing" secondItem="IUI-JQ-v88" secondAttribute="trailing" id="m9k-rH-9eP"/>
+                    <constraint firstItem="sbY-aS-SoQ" firstAttribute="top" secondItem="JMv-3b-4yh" secondAttribute="bottom" constant="3" id="vkG-R0-uyv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="auditStatus" destination="sbY-aS-SoQ" id="eJ0-yT-Mht"/>
+                <outlet property="contractId" destination="IUI-JQ-v88" id="hA6-YE-nOD"/>
+                <outlet property="oprerationName" destination="JMv-3b-4yh" id="1dH-3z-oee"/>
+                <outlet property="supplierName" destination="HVw-co-urr" id="76p-sQ-Xf0"/>
+            </connections>
+            <point key="canvasLocation" x="352" y="305.5"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -73,6 +73,7 @@ public class ContractIntroductionActivity extends BaseActivity implements
 		waitAudit.setOnClickListener(this);
 		alreadyAudit = (TextView) findViewById(R.id.contract_introduction_already_audit);
 		alreadyAudit.setOnClickListener(this);
+		getList(auditStatus);
 
 	}
 
@@ -80,7 +81,7 @@ public class ContractIntroductionActivity extends BaseActivity implements
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		getList(auditStatus);
+		//getList(auditStatus);
 	}
 
 	/**

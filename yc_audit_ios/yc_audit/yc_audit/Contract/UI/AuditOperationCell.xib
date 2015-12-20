@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="221" id="KGk-i7-Jjw" customClass="AuditOperationCell">
+            <rect key="frame" x="0.0" y="0.0" width="324" height="221"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="324" height="220"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kON-Yi-kPa">
+                        <rect key="frame" x="13" y="4" width="51" height="31"/>
+                    </switch>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="同意" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vR8-vr-pco">
+                        <rect key="frame" x="87" y="9" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="填写你的审核意见" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5OZ-om-s6N">
+                        <rect key="frame" x="8" y="48" width="307" height="87"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="90" id="clo-AH-jDZ"/>
+                        </constraints>
+                        <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qR-9S-cLi">
+                        <rect key="frame" x="26" y="143" width="273" height="40"/>
+                        <color key="backgroundColor" red="1" green="0.68622387429999998" blue="0.41129764600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="5fP-IL-4ym"/>
+                        </constraints>
+                        <state key="normal" title="提交审核">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kON-Yi-kPa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="3MS-q1-7P3"/>
+                    <constraint firstAttribute="trailing" secondItem="vR8-vr-pco" secondAttribute="trailing" constant="10" id="7zA-6j-Rff"/>
+                    <constraint firstItem="3qR-9S-cLi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="RqB-qg-ju6"/>
+                    <constraint firstItem="vR8-vr-pco" firstAttribute="leading" secondItem="kON-Yi-kPa" secondAttribute="trailing" constant="20" id="Xg0-kP-Tmt"/>
+                    <constraint firstItem="3qR-9S-cLi" firstAttribute="top" secondItem="5OZ-om-s6N" secondAttribute="bottom" constant="20" id="YeM-04-8WO"/>
+                    <constraint firstAttribute="trailing" secondItem="5OZ-om-s6N" secondAttribute="trailing" constant="10" id="aTn-TQ-WJE"/>
+                    <constraint firstItem="vR8-vr-pco" firstAttribute="centerY" secondItem="kON-Yi-kPa" secondAttribute="centerY" id="fbk-Jm-rJQ"/>
+                    <constraint firstAttribute="bottom" secondItem="3qR-9S-cLi" secondAttribute="bottom" constant="30" id="gyZ-E9-cQx"/>
+                    <constraint firstItem="5OZ-om-s6N" firstAttribute="top" secondItem="kON-Yi-kPa" secondAttribute="bottom" constant="8" id="kw5-3r-xfv"/>
+                    <constraint firstItem="5OZ-om-s6N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="u0f-0B-P9w"/>
+                    <constraint firstAttribute="trailing" secondItem="3qR-9S-cLi" secondAttribute="trailing" constant="25" id="yk3-Vm-OTW"/>
+                    <constraint firstItem="kON-Yi-kPa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yo7-n8-Sn1"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="Xg0-kP-Tmt"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="isAgreen" destination="kON-Yi-kPa" id="ZB4-Z9-uaa"/>
+                <outlet property="operateDesc" destination="vR8-vr-pco" id="yj6-xd-ibR"/>
+                <outlet property="opinion" destination="5OZ-om-s6N" id="xZl-e9-uQB"/>
+                <outlet property="submitBtn" destination="3qR-9S-cLi" id="cd5-Iq-Yyg"/>
+            </connections>
+            <point key="canvasLocation" x="231" y="358.5"/>
+        </tableViewCell>
+    </objects>
+</document>
