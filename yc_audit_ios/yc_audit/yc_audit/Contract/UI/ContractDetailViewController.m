@@ -26,8 +26,9 @@
 #import "HttpSubmitAuditOperationRequest.h"
 #import "RuntimeContext.h"
 #import "UserInfo.h"
+#import "ViewUtil.h"
 
-@interface ContractDetailViewController ()<UITableViewDataSource,UITableViewDelegate>{
+@interface ContractDetailViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>{
     /*合同详情tableView*/
     __weak IBOutlet UITableView *detailTableView;
     /*获取详情失败*/
@@ -50,6 +51,8 @@
     [self initData];
     //初始化ui
     [self initUI];
+    //初始化事件
+    [self initEvent];
     //获取合同详情
     [self getContractDetail];
     // Do any additional setup after loading the view from its nib.
@@ -61,6 +64,9 @@
 /*初始化UI*/
 -(void)initUI{
     self.navigationItem.title = @"合同详情";
+    //[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    self.navigationItem.leftBarButtonItem = [ViewUtil getButtonItemWithTitle:@"返回" font:small_font color:[UIColor whiteColor] frame:CGRectMake(10.f,(navigationBarHorizontalHeight - 35.f)/2,35.f,35.f) target:self sel:@selector(back)];
+    
     detailTableView.estimatedRowHeight = 80.f;
     //注册cell
     UINib* nib0 = [UINib nibWithNibName:contract_cell_info bundle:nil];
@@ -78,6 +84,25 @@
     UINib* nib4 = [UINib nibWithNibName:contract_cell_audit_operation bundle:nil];
     [detailTableView registerNib:nib4 forCellReuseIdentifier:contract_cell_audit_operation];
     
+}
+/*
+ *初始化事件
+ */
+-(void)initEvent{
+    [ViewUtil registerGestures:self.view target:self action:@selector(closeKeyboard)];
+
+}
+/*
+ *返回
+ */
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+/*
+ *关闭键盘
+ */
+-(void)closeKeyboard{
+    [auditContent resignFirstResponder];
 }
 
 /*
@@ -139,6 +164,17 @@
     sectionLabel.font = title_font;
     sectionLabel.textColor = lightBlueColor;
     ContractSection* contractSection = contractSections[section];
+    
+    if (section == 2&&(!contractDetail.products||contractDetail.products.count <= 0)) {
+        sectionLabel.text = [NSString stringWithFormat:@"%@%@",@"  ",@"暂无产品信息"];
+        return sectionLabel;
+    }
+    
+    if(section == 3&&(!contractDetail.checkInfos||contractDetail.checkInfos.count <= 0)) {
+        sectionLabel.text = [NSString stringWithFormat:@"%@%@",@"  ",@"暂无审核信息"];
+        return sectionLabel;
+    }
+    
     sectionLabel.text = [NSString stringWithFormat:@"%@%@",@"  ",contractSection.sectionDesc];
     return sectionLabel;
 }
@@ -152,6 +188,7 @@
 -(UITableViewCell*)getContractDetailCell:(NSIndexPath*)indexPath tableView:(UITableView*)tableView{
     ContractSection* contractSection = contractSections[indexPath.section];
     UITableViewCell* contractCell = [tableView dequeueReusableCellWithIdentifier:contractSection.cellNibName];
+    contractCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self filterContractCell:contractCell indexPath:indexPath tableView:tableView];
     return contractCell;
 }
@@ -205,8 +242,8 @@
     ContractProducts* product = contractDetail.products[indexPath.row];
     productCell.productId.text = product.productname;
     productCell.unit.text = [NSString stringWithFormat:@"(%@元/%@)",product.unitprice,product.unit];
-    productCell.totalPrice.text = [NSString stringWithFormat:@"总价格：%@元",[MathUtil decimalNumberMutiplyWithString:product.unitprice value2:product.total]];
-    productCell.totalNumber.text = [NSString stringWithFormat:@"总数量：%@%@",product.total,product.unit];
+    productCell.totalPrice.text = [NSString stringWithFormat:@"总价格：%@元",product.total];
+    productCell.totalNumber.text = [NSString stringWithFormat:@"总数量：%@%@",product.quantity,product.unit];
 }
 
 
@@ -223,15 +260,15 @@
  *操作AuditOperationCell
  */
 -(void)operationAuditOperationCell:(AuditOperationCell*)auditOperationCell indexPath:(NSIndexPath*)indexPath tableView:(UITableView*)tableView{
-    static int operationCount = 1;
-    if (operationCount <= 1) {
+    if(!isAgreenLable){
         isAgreenLable = auditOperationCell.operateDesc;
         auditContent = auditOperationCell.opinion;
+        auditContent.delegate = self;
+        auditContent.returnKeyType = UIReturnKeyDone;
         isAgreenSwitch = auditOperationCell.isAgreen;
         [isAgreenSwitch addTarget:self action:@selector(agreenSwitchChanged:) forControlEvents:UIControlEventValueChanged];
         [auditOperationCell.submitBtn addTarget:self action:@selector(submitAuditContent) forControlEvents:UIControlEventTouchDown];
     }
-    operationCount++;
 }
 /*
  *同意开关操作响应
@@ -286,7 +323,14 @@
     [submitAuditOperationRequest submitRequest];
 
 }
+#pragma mark TextView 代理
+-(BOOL)textViewShouldEndEditing:(UITextView *)textView{
+    [textView resignFirstResponder];
+    return YES;
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
 @end

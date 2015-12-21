@@ -50,8 +50,6 @@
  初始化ui
  */
 -(void)initUI{
-    
-    
     //初始合同选择tab
     NSArray* contractTypes = @[@"待审查",@"已审查"];
     UISegmentedControl* contractTypeSegmentedControl = [[UISegmentedControl alloc]initWithItems:contractTypes];
@@ -128,11 +126,13 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ContractIntroduceCell* contractIntroduceCell = [contractTableView dequeueReusableCellWithIdentifier:@"contractCell"];
+    contractIntroduceCell.selectionStyle = UITableViewCellSelectionStyleBlue;
     ContractIntroduction* contractIntroduction = contractDatas[indexPath.row];
     contractIntroduceCell.contractId.text = [NSString stringWithFormat:@"%@%@",@"合同编号：",contractIntroduction.contractId];
     contractIntroduceCell.supplierName.text = [NSString stringWithFormat:@"%@%@",@"供应商名称：",contractIntroduction.supplierName];
     contractIntroduceCell.oprerationName.text =  [NSString stringWithFormat:@"%@%@",@"送审人：",contractIntroduction.operater];
     contractIntroduceCell.auditStatus.text = [NSString stringWithFormat:@"%@%@",@"审核状态：",[contractIntroduction.status isEqualToString:@"0"]?@"待审核":[contractIntroduction.status isEqualToString:@"1"]?@"已通过":@"未通过"];
+    
     return contractIntroduceCell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
