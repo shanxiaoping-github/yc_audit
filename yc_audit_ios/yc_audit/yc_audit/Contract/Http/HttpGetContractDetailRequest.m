@@ -19,7 +19,7 @@
 }
 
 -(NSArray *)getPramaKeys{
-    return @[@"action",@"contractId",@"processId",@"processNode"];
+    return @[@"action",@"userName",@"contractId",@"processId",@"processNode"];
 }
 -(void)parseResponse:(NSString *)resultType result:(NSString *)result response:(id)response{
     if ([resultType isEqualToString:NOMAL]) {

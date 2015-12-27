@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shyc.yc_audit.R;
 import com.shyc.yc_audit.http.HttpAdress;
 import com.shyc.yc_audit.http.HttpLoginClient;
@@ -25,7 +26,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private EditText userNameEdit;
 	private EditText userPwdEdit;
 	private Button loginNext;
-
+	
+	
 	@Override
 	protected void layout() {
 		// TODO Auto-generated method stub

@@ -20,15 +20,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //揣果注册
-    @try {
-        [ChuaiGuo Begin:@"c23a7ef74b9f0af4fa3d21c08be63724"];
-    }
-    @catch (NSException *exception) {}
-    @finally {
+    //@try {
+    //    [ChuaiGuo Begin:@"c23a7ef74b9f0af4fa3d21c08be63724"];
+    //}
+    //@catch (NSException *exception) {}
+    //@finally {
         [[UINavigationBar appearance]setBarTintColor:kColorWithRGB(74,202,226,1)];
         [[AppDelegate shareInstance] jumpUIViewController:[LoginViewController new]];
         return YES;
-    }
+    //}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

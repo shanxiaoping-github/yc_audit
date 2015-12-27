@@ -9,5 +9,5 @@
 #ifndef HttpContant_h
 #define HttpContant_h
 #define BASE_URL @"http://eps.caigouzhongxin.com:8088"
-
+//#define BASE_URL @"http://dzcg.zhengbang.com/"
 #endif /* HttpContant_h */

@@ -24,7 +24,7 @@
     }
 }
 -(NSArray *)getPramaKeys{
-    return @[@"action",@"userName"];
+    return @[@"action",@"userName",@"page"];
 }
 -(void)parseResponse:(NSString *)resultType result:(NSString *)result response:(id)response{
     if ([resultType isEqualToString:NOMAL]) {

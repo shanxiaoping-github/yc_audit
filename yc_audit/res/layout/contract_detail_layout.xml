@@ -102,6 +102,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/contract_detail_audit_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/baseColor"

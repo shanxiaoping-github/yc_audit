@@ -12,6 +12,10 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.shyc.yc_audit.R;
 import com.shyc.yc_audit.adapter.ContractIntroductionAdapter;
 import com.shyc.yc_audit.data.ContractIntroduction;
@@ -27,29 +31,33 @@ import com.shyc.yc_audit.util.ShowUtil;
  *
  */
 public class ContractIntroductionActivity extends BaseActivity implements
-		OnClickListener {
+		OnClickListener, OnRefreshListener<ListView>, OnLastItemVisibleListener {
 	/**
 	 * contractlistview 合同listview contractAdapter 合同适配器
 	 */
 	private ListView contractlistview;
 	private ContractIntroductionAdapter contractAdapter;
 	/**
-	 * 审核 auditStatus 审核状态 ,0待审核，1已审核
-	 * empty 是否空数据
-	 * waitAudit 等待审核 
-	 * alreadyAudit 已审核
+	 * 审核 auditStatus 审核状态 ,0待审核，1已审核 empty 是否空数据 waitAudit 等待审核 alreadyAudit
+	 * 已审核
 	 */
 	private int auditStatus;
 	private TextView empty;
 	private TextView waitAudit;
 	private TextView alreadyAudit;
-	
+	// 上下拉
+	private PullToRefreshListView pullRefresh;
+	private int currentPage;
 
 	@Override
 	protected void layout() {
 		// TODO Auto-generated method stub
 		setContentView(R.layout.contract_introduction_layout);
-		contractlistview = (ListView) findViewById(R.id.contract_introduction_listview);
+		currentPage = 1;
+		pullRefresh = (PullToRefreshListView) findViewById(R.id.contract_introduction_pullrefresh);
+		pullRefresh.setOnRefreshListener(this);
+		pullRefresh.setOnLastItemVisibleListener(this);
+		contractlistview = pullRefresh.getRefreshableView();
 		contractAdapter = new ContractIntroductionAdapter();
 		contractAdapter.setContext(this);
 		contractAdapter.setListener(new AdapterItemListener() {
@@ -65,15 +73,15 @@ public class ContractIntroductionActivity extends BaseActivity implements
 				return false;
 			}
 		});
-		contractlistview.setAdapter(contractAdapter);
+		pullRefresh.setAdapter(contractAdapter);
 		// 审核
 		auditStatus = 0;
-		empty = (TextView)findViewById(R.id.contract_introduction_empty);
+		empty = (TextView) findViewById(R.id.contract_introduction_empty);
 		waitAudit = (TextView) findViewById(R.id.contract_introduction_wait_audit);
 		waitAudit.setOnClickListener(this);
 		alreadyAudit = (TextView) findViewById(R.id.contract_introduction_already_audit);
 		alreadyAudit.setOnClickListener(this);
-		getList(auditStatus);
+		getList(auditStatus,currentPage,true,true);
 
 	}
 
@@ -81,7 +89,7 @@ public class ContractIntroductionActivity extends BaseActivity implements
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//getList(auditStatus);
+		// getList(auditStatus);
 	}
 
 	/**
@@ -94,7 +102,8 @@ public class ContractIntroductionActivity extends BaseActivity implements
 	 * @author shanxiaoping
 	 * @data 2015年12月19日
 	 */
-	private void getList(int status) {
+	private void getList(int status, int page, final boolean isFresh,
+			final boolean isLoading) {
 
 		HttpContractListClient client = new HttpContractListClient();
 		client.cleanResponse();
@@ -102,27 +111,41 @@ public class ContractIntroductionActivity extends BaseActivity implements
 
 			public boolean onTimeout() {
 				// TODO Auto-generated method stub
+				pullRefresh.onRefreshComplete();
 				ShowUtil.closeHttpDialog();
 				return false;
 			}
 
 			public boolean onSuccess(BaseAsynHttpClient asynHttpClient) {
 				// TODO Auto-generated method stub
+				pullRefresh.onRefreshComplete();
 				ShowUtil.closeHttpDialog();
 				HttpContractListClient client = (HttpContractListClient) asynHttpClient;
-				contractAdapter.setList(client.getList());
-				contractAdapter.notifyDataSetChanged();
-				if(client.getList().size()>0){
-					empty.setVisibility(View.GONE);
-				}else{
-					empty.setVisibility(View.VISIBLE);
-					empty.setText("暂无合同");
+				if (isFresh) {
+					contractAdapter.setList(client.getList());
+					if (isLoading) {
+						if (client.getList().size() > 0) {
+							empty.setVisibility(View.GONE);
+						} else {
+							empty.setVisibility(View.VISIBLE);
+							empty.setText("暂无合同");
+						}
+					}
+				} else {
+					if (client.getList().size() > 0) {
+						currentPage++;
+						contractAdapter.getList().addAll(client.getList());
+					} else {
+						showShortToast("没有更多数据");
+					}
 				}
+				contractAdapter.notifyDataSetChanged();
 				return false;
 			}
 
 			public boolean onEmpty() {
 				// TODO Auto-generated method stub
+				pullRefresh.onRefreshComplete();
 				ShowUtil.closeHttpDialog();
 				return false;
 			}
@@ -132,9 +155,14 @@ public class ContractIntroductionActivity extends BaseActivity implements
 		client.setPramas(new Object[] {
 				status == 0 ? HttpAdress.CONTRACT_LIST_ACTION
 						: HttpAdress.CONTRACT_ALREADY_LIST_ACTION,
-				userinfo.getUserName() });
-		ShowUtil.openHttpDialog("加载中...");
-		empty.setText("");
+				userinfo.getUserName(),page });
+		if (isFresh) {
+			if (isLoading) {
+				ShowUtil.openHttpDialog("加载中...");
+				empty.setVisibility(View.VISIBLE);
+				empty.setText("");
+			}
+		}
 		client.subRequestPost(status == 0 ? HttpAdress.CONTRACT_LIST_URL
 				: HttpAdress.CONTRACT_ALREADY_LIST_URL);
 
@@ -179,7 +207,8 @@ public class ContractIntroductionActivity extends BaseActivity implements
 			alreadyAudit.setTextColor(getResources().getColor(R.color.white));
 			break;
 		}
-		getList(auditStatus);
+		currentPage = 1;
+		getList(auditStatus,currentPage,true,true);
 	}
 
 	/**
@@ -204,6 +233,18 @@ public class ContractIntroductionActivity extends BaseActivity implements
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	public void onLastItemVisible() {
+		// TODO Auto-generated method stub
+		int page = currentPage + 1;
+		getList(auditStatus,page,false,false);
+	}
+
+	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+		// TODO Auto-generated method stub
+		currentPage = 1;
+		getList(auditStatus,currentPage,true,false);
 	}
 
 }

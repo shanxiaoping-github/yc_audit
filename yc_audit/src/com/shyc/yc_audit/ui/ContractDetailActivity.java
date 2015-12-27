@@ -1,7 +1,6 @@
 package com.shyc.yc_audit.ui;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import sxp.android.framework.application.SXPApplication;
 import sxp.android.framework.http.BaseAsynHttpClient;
@@ -56,14 +55,14 @@ public class ContractDetailActivity extends BaseActivity implements
 	private View checkView;
 	private ListView checkListView;
 	private CheckInfoAdapter checkInfoAdapter;
-	
+
 	private TextView yesTxt;
 	private TextView noTxt;
 
 	private CheckBox yesBox;
 	private CheckBox noBox;
 	private EditText auditOpinion;
-	
+
 	@Override
 	protected void layout() {
 		// TODO Auto-generated method stub
@@ -96,12 +95,12 @@ public class ContractDetailActivity extends BaseActivity implements
 		/**
 		 * 审核历史记录
 		 */
-		checkListView = (ListView)findViewById(R.id.contract_detail_check_listview);
+		checkListView = (ListView) findViewById(R.id.contract_detail_check_listview);
 		checkView = findViewById(R.id.contract_detail_check_ly);
 		checkInfoAdapter = new CheckInfoAdapter();
 		checkInfoAdapter.setContext(this);
 		checkListView.setAdapter(checkInfoAdapter);
-		
+
 		/**
 		 * 审核操作
 		 */
@@ -139,6 +138,17 @@ public class ContractDetailActivity extends BaseActivity implements
 
 		findViewById(R.id.contract_detail_back).setOnClickListener(this);
 		findViewById(R.id.contract_detail_submit).setOnClickListener(this);
+		if (!contract.getAuditStatus().equals("0")) {
+			findViewById(R.id.contract_detail_submit).setVisibility(View.GONE);
+			findViewById(R.id.contract_detail_audit_layout).setVisibility(
+					View.GONE);
+
+			yesBox.setVisibility(View.GONE);
+			noBox.setVisibility(View.GONE);
+			yesTxt.setVisibility(View.GONE);
+			noTxt.setVisibility(View.GONE);
+			auditOpinion.setVisibility(View.GONE);
+		}
 		getDetail();
 
 	}
@@ -170,14 +180,17 @@ public class ContractDetailActivity extends BaseActivity implements
 				return false;
 			}
 		});
-		client.setPramas(new Object[] { HttpAdress.CONTRACT_RESULT_INFO_ACTION,contract.getSerialNumber(),
-				contract.getProcessId(),contract.getProcessNode()
+		UserInfo userInfo = (UserInfo) SXPApplication.getInstance()
+				.getSXPRuntimeContext().getData(UserInfo.class.getName());
+		client.setPramas(new Object[] { HttpAdress.CONTRACT_RESULT_INFO_ACTION,
+				userInfo.getUserName(), contract.getSerialNumber(),
+				contract.getProcessId(), contract.getProcessNode()
 
 		});
 		client.subRequestPost(HttpAdress.CONTRACT_RESULT_INFO_URL);
 
 	}
-	
+
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
@@ -205,56 +218,63 @@ public class ContractDetailActivity extends BaseActivity implements
 			public boolean onSuccess(BaseAsynHttpClient asynHttpClient) {
 				// TODO Auto-generated method stub
 				ShowUtil.closeHttpDialog();
-				HttpContractSubmitResultClient client = (HttpContractSubmitResultClient)asynHttpClient;
-				if(client.getFlag().equals("0")){
+				HttpContractSubmitResultClient client = (HttpContractSubmitResultClient) asynHttpClient;
+				if (client.getFlag().equals("0")) {
 					showShortToast("审核成功,进入下一级审核");
 					finishBase();
-				}else if(client.getFlag().equals("-1")){
+				} else if (client.getFlag().equals("-1")) {
 					showShortToast("审核结束,合同审核状态保存失败");
-				}else if(client.getFlag().equals("1")){
+					finishBase();
+				} else if (client.getFlag().equals("1")) {
 					showShortToast("审核结束,合同审核状态保存成功");
-				}else{
+					finishBase();
+				} else {
 					showShortToast("审核失败");
 				}
 				return false;
 			}
 
 			public boolean onEmpty() {
-				
+
 				// TODO Auto-generated method stub
 				ShowUtil.closeHttpDialog();
 				showShortToast("审核失败");
 				return false;
 			}
 		});
-	
-		String opinionStr  = auditOpinion.getText().toString();
+
+		String opinionStr = auditOpinion.getText().toString();
 		UserInfo userInfo = (UserInfo) SXPApplication.getInstance()
 				.getSXPRuntimeContext().getData(UserInfo.class.getName());
 
 		try {
-			client.setPramas(new Object[] { HttpAdress.CONTRACT_AUDIT_ACTION,
-					contract.getSerialNumber(),userInfo.getUserName(),
+			String filterOpinionStr = opinionStr.trim().replaceAll(" ", "");
+			client.setPramas(new Object[] {
+					HttpAdress.CONTRACT_AUDIT_ACTION,
+					contract.getSerialNumber(),
+					userInfo.getUserName(),
 					yesBox.isChecked() ? "1" : "2",
-					StringUtil.isEmpty(opinionStr)?"":new String(opinionStr.getBytes("utf-8"), "gb2312"),contract.getProcessId(),contract.getProcessNode()
+					StringUtil.isEmpty(opinionStr) ? "" : new String(
+							(filterOpinionStr + filterOpinionStr).getBytes(),
+							"utf-8"), contract.getProcessId(),
+					contract.getProcessNode()
 
 			});
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
+
 		ShowUtil.openHttpDialog("审核提交中...");
 		client.subRequestPost(HttpAdress.CONTRACT_AUDIT_URL);
 
 	}
- 
-	
+
 	/**
 	 * 设置详情
 	 */
 	private void setContractDetail(ContractDetail contractDetail) {
-		
+
 		code.setText("合同编号: "
 				+ contractDetail.getContractInfo().getContractId());
 		company.setText("公司: " + contractDetail.getCrateContractOrg());
@@ -270,12 +290,12 @@ public class ContractDetailActivity extends BaseActivity implements
 		contracTermContent.setText(contractDetail.getContractInfo().getTxt7());
 		productAdapter.setList(contractDetail.getProductList());
 		productAdapter.notifyDataSetChanged();
-		
-		if(contractDetail.getCheckInfos().size()>0){
+
+		if (contractDetail.getCheckInfos().size() > 0) {
 			checkView.setVisibility(View.VISIBLE);
 			checkInfoAdapter.setList(contractDetail.getCheckInfos());
 			checkInfoAdapter.notifyDataSetChanged();
-		}else{
+		} else {
 			checkView.setVisibility(View.GONE);
 		}
 	}

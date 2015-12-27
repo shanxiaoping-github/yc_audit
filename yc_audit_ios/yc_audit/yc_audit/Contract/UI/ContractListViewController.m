@@ -17,15 +17,20 @@
 #import "ContractIntroduceCell.h"
 #import "ContractIntroduction.h"
 #import "ContractDetailViewController.h"
+#import "MJRefresh.h"
 @interface ContractListViewController()<UITableViewDataSource,UITableViewDelegate>{
     /*合同数据*/
     NSMutableArray* contractDatas;
+    /*合同选项*/
+    UISegmentedControl* contractTypeSegmentedControl;
     /*合同列表*/
     __weak IBOutlet UITableView *contractTableView;
+    NSUInteger currentPage;
     /*合同为空*/
     __weak IBOutlet UILabel *emptyContract;
     /*加载条*/
     MBProgressHUD* loadDialog;
+    
 }
 @end
 @implementation ContractListViewController
@@ -34,7 +39,8 @@
     [super viewDidLoad];
     [self initData];
     [self initUI];
-    [self getContracts:0];
+    currentPage = 1;
+    [self getContracts:0 page:[NSString stringWithFormat:@"%li",currentPage] isfresh:YES isLoading:YES];
 }
 
 /*
@@ -44,6 +50,7 @@
     if (!contractDatas) {
         contractDatas = [NSMutableArray new];
     }
+    currentPage = 1;
 }
 
 /*
@@ -52,7 +59,7 @@
 -(void)initUI{
     //初始合同选择tab
     NSArray* contractTypes = @[@"待审查",@"已审查"];
-    UISegmentedControl* contractTypeSegmentedControl = [[UISegmentedControl alloc]initWithItems:contractTypes];
+    contractTypeSegmentedControl = [[UISegmentedControl alloc]initWithItems:contractTypes];
     contractTypeSegmentedControl.frame = CGRectMake(0.f, 0.f,screenWidth/3,30.f);
     contractTypeSegmentedControl.center = CGPointMake(screenWidth/2,(statusBarNomalHeight+navigationBarHorizontalHeight)/2);
     [contractTypeSegmentedControl setTintColor:[UIColor whiteColor]];
@@ -63,21 +70,47 @@
     UINib* contractNib = [UINib nibWithNibName:@"ContractIntroduceCell" bundle:nil];
     [contractTableView registerNib:contractNib forCellReuseIdentifier:@"contractCell"];
     contractTableView.estimatedRowHeight = 44.f;
+    [self initPullRefresh];
 }
-
+/*!
+ @author shanxiaoping
+ 
+ @brief 初始化pullRefresh
+ */
+-(void)initPullRefresh{
+    [contractTableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [contractTableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+/*!
+ @author shanxiaoping
+ 
+ @brief 刷新
+ */
+-(void)headerRereshing{
+    currentPage = 1;
+    [self getContracts:contractTypeSegmentedControl.selectedSegmentIndex page:[NSString stringWithFormat:@"%li",currentPage] isfresh:YES isLoading:NO];
+}
+/*!
+ @author shanxiaoping
+ 
+ @brief 下拉
+ */
+-(void)footerRereshing{
+    NSUInteger nextPage = currentPage+1;
+    [self getContracts:contractTypeSegmentedControl.selectedSegmentIndex page:[NSString stringWithFormat:@"%li",nextPage] isfresh:NO isLoading:NO];
+}
 /*
  选取合同
  */
 -(void)selectContractType:(id)sender{
+    currentPage = 1;
     UISegmentedControl* control = sender;
-    [self getContracts:control.selectedSegmentIndex];
+    [self getContracts:control.selectedSegmentIndex page:[NSString stringWithFormat:@"%li",currentPage] isfresh:YES isLoading:YES];
 }
 /*
  * auditStatus 0待审核 1已审核
  */
--(void)getContracts:(NSInteger)auditStatus{
-    emptyContract.text = @"";
-    emptyContract.hidden = NO;
+-(void)getContracts:(NSInteger)auditStatus page:(NSString*)page isfresh:(BOOL)isfresh isLoading:(BOOL)isLoading{
     NSString* action;
     switch (auditStatus) {
         case 0:
@@ -90,25 +123,49 @@
     HttpGetContractsRequest* getContractsRequest = [HttpGetContractsRequest new];
     HttpResponse* contractResponse = [HttpResponse new];
     contractResponse.success = ^(id httpRequest,id httpResponse){
+        [contractTableView footerEndRefreshing];
+        [contractTableView headerEndRefreshing];
         loadDialog.hidden = YES;
-        if (getContractsRequest.contracts.count > 0) {
-            [contractDatas removeAllObjects];
-            [contractDatas addObjectsFromArray:getContractsRequest.contracts];
-            [contractTableView reloadData];
-            emptyContract.hidden = YES;
+        if (isfresh) {
+            if (getContractsRequest.contracts.count > 0) {
+                [contractDatas removeAllObjects];
+                [contractDatas addObjectsFromArray:getContractsRequest.contracts];
+                [contractTableView reloadData];
+                if (isLoading) {
+                    emptyContract.hidden = YES;
+                }
+            }else{
+                if (isLoading) {
+                    emptyContract.text = @"暂无合同";
+                    emptyContract.hidden = NO;
+                }
+            }
         }else{
-            emptyContract.text = @"暂无合同";
-            emptyContract.hidden = NO;
+            if (getContractsRequest.contracts.count > 0) {
+                currentPage++;
+                [contractDatas addObjectsFromArray:getContractsRequest.contracts];
+                [contractTableView reloadData];
+            }else{
+                [self showMessage:@"没有更多数据"];
+            }
+        
         }
+        
     };
     contractResponse.faile = ^(id httpRequest,NSError* error){
+        [contractTableView footerEndRefreshing];
+        [contractTableView headerEndRefreshing];
         loadDialog.hidden = YES;
     };
     getContractsRequest.httpResponse = contractResponse;
     getContractsRequest.auditStatus = auditStatus;
     UserInfo* userInfo = [[RuntimeContext shareInstance] getClasstData:[UserInfo class]];
-    [getContractsRequest setPramaValues:@[action,userInfo.userName]];
-    loadDialog = [MBProgressHUDManager showLoad:@"获取合同中" view:self.view];
+    [getContractsRequest setPramaValues:@[action,userInfo.userName,page]];
+    if (isLoading) {
+        emptyContract.text = @"";
+        emptyContract.hidden = NO;
+        loadDialog = [MBProgressHUDManager showLoad:@"获取合同中" view:self.view];
+    }
     [getContractsRequest submitRequest];
 }
 -(UIColor *)navigationColor{

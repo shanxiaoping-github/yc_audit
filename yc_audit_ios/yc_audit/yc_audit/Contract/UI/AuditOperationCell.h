@@ -17,4 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *opinion;
 /*提交按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
+/*底部高度*/
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomLayoutConstraintHeight;
 @end

@@ -38,9 +38,11 @@
     /*合同详情*/
     ContractDetail* contractDetail;
     /*审核*/
+    AuditOperationCell* theAuditOperationCell;
     UISwitch* isAgreenSwitch;
     UILabel* isAgreenLable;
     UITextView* auditContent;
+    CGFloat keyHeight;
 }
 @end
 @implementation ContractDetailViewController
@@ -59,6 +61,7 @@
 }
 /*初始化数据*/
 -(void)initData{
+    keyHeight = 0.f;
     contractSections = [NSArray new];
 }
 /*初始化UI*/
@@ -103,6 +106,13 @@
  */
 -(void)closeKeyboard{
     [auditContent resignFirstResponder];
+    if (theAuditOperationCell&&keyHeight >= 0.f) {
+        CGFloat currentSizeHeight = detailTableView.contentSize.height;
+        detailTableView.contentSize = CGSizeMake(detailTableView.contentSize.width,currentSizeHeight -= keyHeight);
+        //CGFloat currentOffsetY = detailTableView.contentOffset.y;
+        //detailTableView.contentOffset = CGPointMake(detailTableView.contentOffset.x,currentOffsetY -= keyHeight);
+        keyHeight = 0.f;
+    }
 }
 
 /*
@@ -129,7 +139,8 @@
         detailFailLabel.text = @"获取合同详情失败";
     };
     getContractDetailRequest.httpResponse = detailResponse;
-    [getContractDetailRequest setPramaValues:@[detail_action,_contractIntroduction.contractId,_contractIntroduction.processId,_contractIntroduction.processNode]];
+     UserInfo* userInfo = [[RuntimeContext shareInstance] getClasstData:[UserInfo class]];
+    [getContractDetailRequest setPramaValues:@[detail_action,userInfo.userName,_contractIntroduction.contractId,_contractIntroduction.processId,_contractIntroduction.processNode]];
     [self showIndicatorView];
     [getContractDetailRequest submitRequest];
 }
@@ -141,8 +152,14 @@
     switch (section) {
         case 0:
         case 1:
-        case 4:
             return 1;
+        case 4:{
+            if (![_contractIntroduction.status isEqualToString:@"0"]) {
+                return 0;
+            }else{
+                return 1;
+            }
+        }
         case 2:
             return contractDetail.products.count;
         case 3:
@@ -158,6 +175,10 @@
     return 0.1f;
 }
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 4&&![_contractIntroduction.status isEqualToString:@"0"]) {
+        return nil;
+    }
+    
     UILabel* sectionLabel = [UILabel new];
     sectionLabel.frame = CGRectMake(0.f,0.f,screenWidth,40.f);
     sectionLabel.backgroundColor = baseColor;
@@ -261,6 +282,7 @@
  */
 -(void)operationAuditOperationCell:(AuditOperationCell*)auditOperationCell indexPath:(NSIndexPath*)indexPath tableView:(UITableView*)tableView{
     if(!isAgreenLable){
+        theAuditOperationCell = auditOperationCell;
         isAgreenLable = auditOperationCell.operateDesc;
         auditContent = auditOperationCell.opinion;
         auditContent.delegate = self;
@@ -295,14 +317,20 @@
         [self stopLoadDialog];
         int flag = [submitAuditOperationRequest.flag intValue];
         switch (flag) {
-            case 0:
+            case 0:{
                 [self showMessage:@"审核成功,进入下一级审核"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
                 break;
-            case 1:
+            case 1:{
                 [self showMessage:@"审核结束,合同审核状态保存成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
                 break;
-            case -1:
+            case -1:{
                 [self showMessage:@"审核结束,合同审核状态保存失败"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
                 break;
             default:
                 [self showMessage:@"审核失败"];
@@ -315,8 +343,9 @@
     submitAuditOperationRequest.httpResponse = submitAuditOperationResponse;
     //提交参数
     UserInfo* userInfo = [[RuntimeContext shareInstance] getClasstData:[UserInfo class]];
-    [submitAuditOperationRequest setPramaValues:@[audit_action,contractDetail.contractInfo[0].contractId,userInfo.userName,isAgreenSwitch.on?@"1":@"2",auditContent.text,_contractIntroduction.processId,_contractIntroduction.processNode]];
     
+    NSString* sendContent =  [auditContent.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [submitAuditOperationRequest setPramaValues:@[audit_action,contractDetail.contractInfo[0].contractId,userInfo.userName,isAgreenSwitch.on?@"1":@"2",[NSString stringWithFormat:@"%@%@",sendContent,sendContent],_contractIntroduction.processId,_contractIntroduction.processNode]];
     //显示loading
     [self showLoadDialog:@"提交审核中"];
     //提交
@@ -324,6 +353,17 @@
 
 }
 #pragma mark TextView 代理
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    if (theAuditOperationCell&&keyHeight <= 0.f) {
+        keyHeight = 236.f;
+        CGFloat currentSizeHeight = detailTableView.contentSize.height;
+        detailTableView.contentSize = CGSizeMake(detailTableView.contentSize.width,currentSizeHeight += keyHeight);
+        CGFloat currentOffsetY = detailTableView.contentOffset.y;
+        detailTableView.contentOffset = CGPointMake(detailTableView.contentOffset.x,currentOffsetY += keyHeight);
+        
+    }
+    return YES;
+}
 -(BOOL)textViewShouldEndEditing:(UITextView *)textView{
     [textView resignFirstResponder];
     return YES;

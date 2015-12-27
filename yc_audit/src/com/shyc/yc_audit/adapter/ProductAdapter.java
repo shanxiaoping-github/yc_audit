@@ -35,8 +35,8 @@ public class ProductAdapter extends BaseAdapter<ContractProducts> {
 		holder.unit.setText("(" + product.getUnitprice() + "元/"
 				+ product.getUnit() + ")");
 		
-		holder.totalNumber.setText("总数量:" + product.getTotal());
-		holder.totalPrice.setText("总价格:" + MathUtil.decimalmultip(product.getTotal(), product.getUnitprice()));
+		holder.totalNumber.setText("总数量:" + product.getQuantity());
+		holder.totalPrice.setText("总价格:" + product.getTotal());
 
 		return arg1;
 	}

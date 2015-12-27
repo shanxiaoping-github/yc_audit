@@ -28,6 +28,7 @@ public class HttpContractListClient extends BaseAsynHttpClient {
 		return new String[]{
 				HttpAdress.ACTION,
 				"userName",
+				"page"
 		};
 	}
 	
