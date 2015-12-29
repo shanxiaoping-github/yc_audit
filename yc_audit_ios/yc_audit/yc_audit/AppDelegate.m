@@ -11,9 +11,7 @@
 #import "LoginViewController.h"
 #import "ChuaiGuo.h"
 @interface AppDelegate ()
-
 @end
-
 @implementation AppDelegate
 
 
@@ -25,10 +23,10 @@
     //}
     //@catch (NSException *exception) {}
     //@finally {
-        [[UINavigationBar appearance]setBarTintColor:kColorWithRGB(74,202,226,1)];
-        [[AppDelegate shareInstance] jumpUIViewController:[LoginViewController new]];
-        return YES;
-    //}
+    [[UINavigationBar appearance]setBarTintColor:kColorWithRGB(74,202,226,1)];
+    [[AppDelegate sharedSXPAppDelegate]jumpUIViewController:[LoginViewController new]];
+    return YES;
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

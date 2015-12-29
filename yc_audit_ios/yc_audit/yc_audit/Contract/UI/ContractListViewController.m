@@ -78,8 +78,12 @@
  @brief 初始化pullRefresh
  */
 -(void)initPullRefresh{
+    
     [contractTableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    contractTableView.headerRefreshingText = @"正在刷新中";
+   
     [contractTableView addFooterWithTarget:self action:@selector(footerRereshing)];
+     contractTableView.footerRefreshingText = @"正在拉取数据";
 }
 /*!
  @author shanxiaoping
