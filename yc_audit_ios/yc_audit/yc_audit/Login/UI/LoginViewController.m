@@ -36,6 +36,7 @@
  */
 -(void)initUI{
     loginBtn.layer.cornerRadius = loginBtn.frame.size.height/2;
+   
 }
 #pragma mark 点击响应
 /*
@@ -50,7 +51,7 @@
         loginLoadDialog.hidden = YES;
         if ([httpLoginRequest.status isEqualToString:@"0"]) {
             [[RuntimeContext shareInstance]putClassData:httpLoginRequest.userInfo forkey:[UserInfo class]];
-           UINavigationController* contractListNavigationController =  [[UINavigationController alloc]initWithRootViewController:[ContractListViewController new]];
+            UINavigationController* contractListNavigationController =  [[UINavigationController alloc]initWithRootViewController:[ContractListViewController new]];
             [[AppDelegate shareInstance]jumpUIViewController:contractListNavigationController];
         }else{
             [MBProgressHUDManager showMessage:@"登录失败，用户名或密码错误" view:self.view];
@@ -67,6 +68,10 @@
     
 }
 #pragma mark textFielDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSInteger textLeng = textField.text.length-range.length+string.length;
     if (textLeng > 0) {

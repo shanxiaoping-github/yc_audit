@@ -103,40 +103,44 @@
                         <action selector="loginAction:" destination="-1" eventType="touchUpInside" id="YE0-vM-AP4"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="宜采审核" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zax-vZ-6Kb">
-                    <rect key="frame" x="64" y="53" width="193" height="57"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="40"/>
-                    <color key="textColor" red="0.2901960784" green="0.79215686269999996" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="AkP-At-6TX">
+                    <rect key="frame" x="41" y="44" width="237" height="53"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="53" id="LI5-C8-9Q8"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.89395450597801307" green="0.93524719452546456" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Pvu-CF-zKA" firstAttribute="top" secondItem="tVH-QI-jol" secondAttribute="bottom" constant="44" id="23O-MD-tvX"/>
                 <constraint firstItem="Pvu-CF-zKA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="43" id="2bC-vI-VHh"/>
+                <constraint firstItem="AkP-At-6TX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="5z0-Ni-Rlr"/>
                 <constraint firstItem="tVH-QI-jol" firstAttribute="top" secondItem="m6L-hD-Hlk" secondAttribute="bottom" id="6Dp-1Y-guH"/>
                 <constraint firstAttribute="trailing" secondItem="7gs-XE-0Z1" secondAttribute="trailing" id="AlZ-fd-p2a"/>
+                <constraint firstItem="p89-jo-vFW" firstAttribute="top" secondItem="AkP-At-6TX" secondAttribute="bottom" constant="50" id="BMG-YG-3wK"/>
                 <constraint firstItem="SxB-8h-Rem" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bvc-h5-i0M"/>
                 <constraint firstItem="SxB-8h-Rem" firstAttribute="top" secondItem="p89-jo-vFW" secondAttribute="bottom" id="DLa-Yh-lpp"/>
                 <constraint firstItem="7gs-XE-0Z1" firstAttribute="top" secondItem="SxB-8h-Rem" secondAttribute="bottom" id="J3N-a5-uWM"/>
                 <constraint firstItem="p89-jo-vFW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LXz-9N-ZQh"/>
-                <constraint firstItem="zax-vZ-6Kb" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="Rzm-wl-gZm"/>
                 <constraint firstItem="vbG-6q-Ta4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="S2V-nq-Srw"/>
                 <constraint firstAttribute="trailing" secondItem="p89-jo-vFW" secondAttribute="trailing" id="TPm-A6-TfP"/>
-                <constraint firstItem="zax-vZ-6Kb" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="YQf-aG-OBp"/>
                 <constraint firstAttribute="trailing" secondItem="Pvu-CF-zKA" secondAttribute="trailing" constant="43" id="bYR-qy-TU7"/>
                 <constraint firstItem="vbG-6q-Ta4" firstAttribute="top" secondItem="7gs-XE-0Z1" secondAttribute="bottom" constant="27" id="cfr-k9-PWf"/>
                 <constraint firstItem="m6L-hD-Hlk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="du9-VD-nLN"/>
-                <constraint firstItem="p89-jo-vFW" firstAttribute="top" secondItem="zax-vZ-6Kb" secondAttribute="bottom" constant="50" id="fdV-wc-E31"/>
                 <constraint firstItem="m6L-hD-Hlk" firstAttribute="top" secondItem="vbG-6q-Ta4" secondAttribute="bottom" id="h3u-dx-9F3"/>
                 <constraint firstItem="7gs-XE-0Z1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m6m-oC-CMc"/>
+                <constraint firstItem="AkP-At-6TX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="45" id="p6e-3u-eRs"/>
                 <constraint firstAttribute="trailing" secondItem="tVH-QI-jol" secondAttribute="trailing" id="pMw-38-hXo"/>
                 <constraint firstAttribute="trailing" secondItem="vbG-6q-Ta4" secondAttribute="trailing" id="sJO-Yi-96l"/>
                 <constraint firstItem="tVH-QI-jol" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vXf-Gy-vt2"/>
+                <constraint firstAttribute="trailing" secondItem="AkP-At-6TX" secondAttribute="trailing" constant="45" id="yzb-DV-QOC"/>
                 <constraint firstAttribute="trailing" secondItem="SxB-8h-Rem" secondAttribute="trailing" id="z20-X1-OkA"/>
                 <constraint firstAttribute="trailing" secondItem="m6L-hD-Hlk" secondAttribute="trailing" id="zQS-a2-6gd"/>
             </constraints>
             <point key="canvasLocation" x="348" y="352"/>
         </view>
     </objects>
+    <resources>
+        <image name="logo.jpg" width="408" height="92"/>
+    </resources>
 </document>

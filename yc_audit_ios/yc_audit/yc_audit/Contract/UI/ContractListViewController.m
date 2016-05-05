@@ -18,6 +18,8 @@
 #import "ContractIntroduction.h"
 #import "ContractDetailViewController.h"
 #import "MJRefresh.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
 @interface ContractListViewController()<UITableViewDataSource,UITableViewDelegate>{
     /*合同数据*/
     NSMutableArray* contractDatas;
@@ -66,11 +68,22 @@
     contractTypeSegmentedControl.selectedSegmentIndex = 0;
     [contractTypeSegmentedControl addTarget:self action:@selector(selectContractType:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = contractTypeSegmentedControl;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStyleDone target:self action:@selector(logout)];
     //注册合同cell
     UINib* contractNib = [UINib nibWithNibName:@"ContractIntroduceCell" bundle:nil];
     [contractTableView registerNib:contractNib forCellReuseIdentifier:@"contractCell"];
     contractTableView.estimatedRowHeight = 44.f;
     [self initPullRefresh];
+}
+/*!
+ @author 单小萍
+ 
+ @brief 注销
+ */
+-(void)logout{
+    LoginViewController* loginViewController = [LoginViewController new];
+    [[AppDelegate shareInstance]jumpUIViewController:loginViewController];
 }
 /*!
  @author shanxiaoping
@@ -81,9 +94,9 @@
     
     [contractTableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     contractTableView.headerRefreshingText = @"正在刷新中";
-   
+    
     [contractTableView addFooterWithTarget:self action:@selector(footerRereshing)];
-     contractTableView.footerRefreshingText = @"正在拉取数据";
+    contractTableView.footerRefreshingText = @"正在拉取数据";
 }
 /*!
  @author shanxiaoping
@@ -152,7 +165,7 @@
             }else{
                 [self showMessage:@"没有更多数据"];
             }
-        
+            
         }
         
     };
